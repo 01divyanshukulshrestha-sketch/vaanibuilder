@@ -1,0 +1,1 @@
+{"name":"vaanibuilder","version":"0.2.0","type":"module","scripts":{"start":"node --env-file=.env server.js"},"dependencies":{"express":"^4.19.2"},"engines":{"node":">=20.6"}}

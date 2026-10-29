@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VaaniBuilder</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f6f7;--card:#fff;--ink:#12343b;--mute:#5b7378;--line:#d5e0e2;--acc:#0e7c86;--accx:#fff;--live:#e8a317;--bad:#c8472f;--ok:#2b8a57;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1b1e;--card:#15272b;--ink:#e6f0f1;--mute:#93abb0;--line:#26403f;--acc:#36b9c4;--accx:#08262a;--live:#f0b73a;--bad:#ef7b64;--ok:#52c18a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1b1e;--card:#15272b;--ink:#e6f0f1;--mute:#93abb0;--line:#26403f;--acc:#36b9c4;--accx:#08262a;--live:#f0b73a;--bad:#ef7b64;--ok:#52c18a;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;margin:0;letter-spacing:-.01em}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)}
+.brand{font:700 22px "Bricolage Grotesque",system-ui,sans-serif;display:flex;align-items:center;gap:10px}
+.logo{display:flex;gap:2px;align-items:center;height:22px}.logo i{width:4px;background:var(--acc);border-radius:2px;display:block}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:none;border:0;color:var(--mute);padding:8px 14px;border-radius:8px;font:inherit;cursor:pointer}
+nav button.on{background:var(--acc);color:var(--accx)}
+main{max-width:1060px;margin:0 auto;padding:20px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:3fr 2fr;gap:16px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:600;margin:12px 0 4px}
+input,textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px}
+textarea{min-height:84px;resize:vertical}
+button.p,button.s{font:inherit;font-weight:600;border-radius:8px;padding:9px 16px;cursor:pointer;border:1px solid var(--acc)}
+button.p{background:var(--acc);color:var(--accx)}button.s{background:none;color:var(--acc)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--live);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:99px;padding:5px 12px;cursor:pointer;font:inherit;font-size:13px}
+.chip.on{border-color:var(--acc);background:var(--acc);color:var(--accx)}
+.mute{color:var(--mute);font-size:13px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.voice{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0}
+.voice.on{border-color:var(--acc);box-shadow:inset 3px 0 0 var(--acc)}
+.log{max-height:250px;overflow:auto;font-size:13px}.log div{border-top:1px solid var(--line);padding:7px 0}
+.del{color:var(--bad)}.add{color:var(--ok)}
+.tr{height:300px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg)}
+.msg{margin:6px 0;max-width:85%;padding:7px 11px;border-radius:10px}
+.msg.a{background:var(--card);border:1px solid var(--line)}.msg.u{background:var(--acc);color:var(--accx);margin-left:auto}
+.msg.n{color:var(--mute);font-size:12px;text-align:center;max-width:100%}
+.wave{display:flex;gap:3px;align-items:center;height:36px}.wave i{width:5px;height:6px;background:var(--live);border-radius:3px;display:block}
+.wave.on i{animation:w .9s ease-in-out infinite}.wave.on i:nth-child(2n){animation-delay:.2s}.wave.on i:nth-child(3n){animation-delay:.4s}
+@keyframes w{0%,100%{height:6px}50%{height:32px}}
+@media(prefers-reduced-motion:reduce){.wave.on i{animation:none;height:20px}}
+.stat{display:flex;gap:12px;flex-wrap:wrap}.stat div{flex:1;min-width:120px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--card)}
+.stat b{display:block;font:700 26px "Bricolage Grotesque",system-ui,sans-serif}
+.tag{display:inline-block;border-radius:99px;padding:1px 10px;font-size:12px;border:1px solid var(--line)}
+.tag.Booked,.tag.Resolved{color:var(--ok);border-color:var(--ok)}.tag.Transferred,.tag.flag{color:var(--bad);border-color:var(--bad)}
+code,pre{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;display:block;overflow-x:auto;font-size:12.5px;white-space:pre-wrap}
+details{border-top:1px solid var(--line);padding:8px 0}summary{cursor:pointer}
+.steps{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;font-size:13px;color:var(--mute)}.steps span{border-bottom:2px solid var(--line);padding:2px 8px}
+.steps span.on{color:var(--ink);border-color:var(--live)}
+</style></head><body>
+<header>
+<div class="brand"><span class="logo" aria-hidden="true"><i style="height:8px"></i><i style="height:20px"></i><i style="height:13px"></i><i style="height:22px"></i><i style="height:9px"></i></span>VaaniBuilder</div>
+<nav id="nav"><button data-t="create" class="on">Create</button><button data-t="test">Test</button><button data-t="deploy">Deploy</button><button data-t="dash">Dashboard</button></nav>
+</header>
+<main>
+<div class="steps" id="steps"></div>
+
+<section id="create" class="on">
+<div class="card">
+<h2>Describe the assistant you want</h2>
+<p class="mute">Pick a starter or write your own. Try the Meera example.</p>
+<div class="chips" id="starters"></div>
+<textarea id="prompt" maxlength="400" placeholder="A friendly receptionist for a dental clinic that books appointments and answers pricing questions"></textarea>
+<div class="row" style="justify-content:space-between"><span class="mute"><span id="cnt">0</span>/400</span><span class="row"><button class="s" id="spk">Speak it</button><button class="p" id="gen">Generate agent</button></span></div>
+<div class="chips" id="examples"></div>
+</div>
+<div id="built" hidden>
+<div class="grid">
+<div class="card">
+<h2>Review and edit</h2>
+<label for="f-name">Agent name</label><input id="f-name">
+<label for="f-welcome">Welcome message</label><textarea id="f-welcome"></textarea>
+<label for="f-lang">Language</label><select id="f-lang"><option>English</option><option>English + Hindi</option></select>
+<label for="f-prompt">Instructions (system prompt)</label><textarea id="f-prompt" style="min-height:170px"></textarea>
+<label>Conversation flow</label><div id="flow"></div><button class="s" id="addstep" style="margin-top:6px">Add step</button>
+<label for="f-kb">Knowledge (price list or FAQ, one item per line)</label><textarea id="f-kb"></textarea>
+<label>Voice</label><div class="chips" id="vf"></div><div id="voices"></div>
+<p class="mute">Voices are loaded from your ElevenLabs account. Preview before you select.</p>
+</div>
+<div>
+<div class="card">
+<h2>Refine in chat</h2>
+<p class="mute">Try: “Make the welcome message shorter and warmer”, “add Hindi”, “transfer to a human if the caller is angry”.</p>
+<div class="row"><input id="chat" placeholder="Ask for a change" aria-label="Ask for a change" style="flex:1"><button class="p" id="send">Apply</button></div>
+<div class="row" style="margin-top:8px"><button class="s" id="undo">Undo</button><span class="mute" id="ver"></span></div>
+<div class="log" id="log"></div>
+</div>
+<div class="card"><button class="p" data-go="test" style="width:100%">Talk to your agent</button></div>
+</div>
+</div></div>
+</section>
+
+<section id="test">
+<div class="card" id="notest"><h2>Test your agent</h2><p class="mute">Create an agent first.</p><button class="s" data-go="create">Go to Create</button></div>
+<div id="testui" hidden>
+<div class="card">
+<div class="row" style="justify-content:space-between"><h2 id="tname">Test console</h2><span class="tag" id="lat">Latency: no turns yet</span></div>
+<div class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="tr" id="tr" aria-live="polite"></div>
+<div class="row" style="margin-top:10px">
+<button class="p" id="start">Start call</button><button class="s" id="mic" disabled>Microphone is live during the call</button><button class="s" id="end" disabled>End call</button>
+</div>
+<div class="row" style="margin-top:8px"><input id="say" placeholder="Or type what the caller says" aria-label="Caller message" style="flex:1" disabled><button class="s" id="sendsay" disabled>Send</button></div>
+<p class="mute" id="note">Powered by ElevenLabs Agents. Speak over the agent and it stops. Latency is measured in your browser.</p>
+</div></div>
+</section>
+
+<section id="deploy">
+<div class="card"><h2>Deploy</h2>
+<p class="mute" id="dstate">Create an agent to deploy it.</p>
+<button class="p" id="pub">Publish agent</button>
+<div id="dout" hidden>
+<label>Shareable test link (placeholder address)</label><code id="link"></code>
+<label>Embeddable widget (illustrative snippet)</label><pre id="embed"></pre>
+<label>Phone demo (simulated flow)</label>
+<p class="mute">1. Caller dials the clinic number. 2. Telephony forwards audio to the agent. 3. Agent greets, answers, books. 4. Transcript lands in the dashboard.</p>
+<button class="s" id="simcall">Simulate inbound call</button>
+</div></div>
+</section>
+
+<section id="dash">
+<div class="stat" id="stats"></div>
+<div class="card" style="margin-top:16px"><h2>Calls</h2><div id="sess"></div></div>
+</section>
+</main>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ST={
+appt:{l:'Appointments',role:'a friendly receptionist',goals:['Book, move or cancel appointments','Answer pricing questions','Pass urgent cases to a person'],steps:['Greet the caller and say you are an AI assistant','Ask what they need','Collect name, day and time','Confirm the booking','Close politely'],ex:'A friendly receptionist for a dental clinic that books appointments and answers pricing questions',kb:'Teeth cleaning: ₹800\nConsultation: ₹300\nWhitening: ₹4,000'},
+lead:{l:'Lead generation',role:'a lead qualification assistant',goals:['Qualify budget and timeline','Capture contact details','Book a site visit'],steps:['Greet and disclose AI','Ask about needs and budget','Capture contact details','Offer a visit slot','Close politely'],ex:'An assistant for a real estate agency that qualifies leads and books site visits',kb:'2 BHK from ₹45 lakh\n3 BHK from ₹70 lakh'},
+sup:{l:'Support',role:'a customer support agent',goals:['Check order status','Explain return rules','Escalate unresolved issues'],steps:['Greet and disclose AI','Identify the issue','Answer from knowledge','Escalate if unresolved','Close politely'],ex:'A support agent for an online store that checks orders and handles returns',kb:'Returns accepted within 7 days\nRefunds take 5 working days'},
+neg:{l:'Negotiation',role:'a polite negotiation assistant',goals:['Understand the offer','Stay within approved limits','Hand off big changes to a person'],steps:['Greet and disclose AI','State the current offer','Hear the counter','Stay within limits','Confirm or escalate'],ex:'A negotiation assistant for a supplier that discusses bulk discounts within set limits',kb:'Maximum discount: 10%'},
+col:{l:'Collections',role:'a courteous payment reminder agent',goals:['Remind about dues','Offer payment options','Respect the caller’s situation'],steps:['Greet and disclose AI','Confirm identity','State the due amount','Offer options','Close politely'],ex:'A polite payment reminder agent that offers payment options without pressure',kb:'Pay online or at the branch\nExtensions need a person’s approval'}};
+let VO=[{id:'asha',n:'Asha',tag:'Conversational',p:1.15,r:1},{id:'rohan',n:'Rohan',tag:'Conversational',p:.9,r:1.05},{id:'meera',n:'Meera',tag:'Narration',p:1.05,r:.9},{id:'kabir',n:'Kabir',tag:'Characters',p:.7,r:.95},{id:'zoya',n:'Zoya',tag:'Characters',p:1.4,r:1.1}];
+const S={cfg:null,hist:[],sess:[
+{id:1,sample:1,dur:74,outcome:'Booked',flag:false,sent:'Positive',sum:'Caller booked a cleaning for Friday at 11 am.',tr:[['a','Hello! I’m Vaani, an AI assistant.'],['u','I want to book a cleaning'],['a','Happy to help. May I have your name?']]},
+{id:2,sample:1,dur:41,outcome:'Transferred',flag:true,sent:'Negative',sum:'Caller reported pain and was passed to a person.',tr:[['u','I have a lot of pain'],['a','I’m sorry to hear that. I’m connecting you to a team member right now.']]}],call:null,key:'appt'};
+let tab='create';
+function go(t){tab=t;$$('section').forEach(s=>s.classList.toggle('on',s.id===t));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+$('#steps').innerHTML=['Write','Test','Refine','Deploy','Observe'].map((x,i)=>`<span class="${[0,1,2,3,3][['create','test','create','deploy','dash'].indexOf(t)>=0?0:0]===0&&((t==='create'&&i<3&&i!==1)||(t==='test'&&i===1)||(t==='deploy'&&i===3)||(t==='dash'&&i===4))?'on':''}">${x}</span>`).join('');
+if(t==='dash')dash();if(t==='deploy')dep();if(t==='test'){$('#notest').hidden=!!S.cfg;$('#testui').hidden=!S.cfg;if(S.cfg)$('#tname').textContent='Talking to '+S.cfg.name}}
+$$('nav button').forEach(b=>b.onclick=()=>go(b.dataset.t));$$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+$('#starters').innerHTML=Object.keys(ST).map(k=>`<button class="chip" data-k="${k}">${ST[k].l}</button>`).join('');
+$('#examples').innerHTML='<span class="mute">Examples:</span>'+Object.keys(ST).slice(0,3).map(k=>`<button class="chip" data-e="${k}">${esc(ST[k].ex)}</button>`).join('');
+$$('[data-k]').forEach(b=>b.onclick=()=>{S.key=b.dataset.k;$$('[data-k]').forEach(x=>x.classList.toggle('on',x===b));$('#prompt').value=ST[S.key].ex;cnt()});
+$$('[data-e]').forEach(b=>b.onclick=()=>{$('#prompt').value=ST[b.dataset.e].ex;S.key=b.dataset.e;cnt()});
+function cnt(){$('#cnt').textContent=$('#prompt').value.length}$('#prompt').oninput=cnt;
+function detect(t){const l=t.toLowerCase();return /negoti|discount/.test(l)?'neg':/collect|payment|due/.test(l)?'col':/lead|real estate|qualif/.test(l)?'lead':/support|order|return/.test(l)?'sup':/appoint|book|clinic|dental|reserv|receptionist/.test(l)?'appt':S.key}
+function title(s){return s.replace(/\b\w/g,c=>c.toUpperCase())}
+function welcome(c){const hi=c.lang.includes('Hindi')?'नमस्ते! ':'';
+if(c.warm&&c.short)return `${hi}Hi, so glad you called! I’m ${c.name}, an AI assistant. How can I help?`;
+if(c.short)return `${hi}Hi, I’m ${c.name}, an AI assistant. How can I help?`;
+if(c.warm)return `${hi}Hi there, lovely to hear from you! I’m ${c.name}, an AI assistant for ${c.biz}. What can I do for you today?`;
+return `${hi}Hello and welcome to ${c.biz}. I’m ${c.name}, an AI assistant. I can help you with ${c.goals.slice(0,2).join(' and ').toLowerCase()}. How may I help you today?`}
+function bprompt(c){return `You are ${c.name}, ${c.role} for ${c.biz}. Say you are an AI assistant at the start and whenever asked.\nTone: ${c.tone}.\nLanguages: ${c.lang}.\n\nGoals:\n${c.goals.map(g=>'- '+g).join('\n')}\n\nFlow:\n${c.steps.map((s,i)=>(i+1)+'. '+s).join('\n')}\n\nRules:\n${c.rules.map(g=>'- '+g).join('\n')}${c.handoff?'\n- Transfer to a human if the caller is angry, in pain, or asks for a person.':''}`}
+const genRules=()=>{const p=$('#prompt').value.trim();if(!p){$('#prompt').focus();$('#prompt').placeholder='Describe your assistant first, or tap a starter above.';return}
+const k=detect(p);S.key=k;const m=p.match(/(?:for|at)\s+(?:a|an|the|my)?\s*([^,.]+?)(?:\s+(?:that|who|and|which)\b|[,.]|$)/i);
+const c={name:'Vaani',biz:m?m[1].trim():'your business',role:ST[k].role,goals:[...ST[k].goals],steps:[...ST[k].steps],kb:ST[k].kb,tone:'warm, clear and brief',lang:/hindi|हिंदी/i.test(p)?'English + Hindi':'English',voice:'asha',handoff:/transfer|human|pain/i.test(p),short:0,warm:/friendly|warm/i.test(p),rules:['Never give medical, legal or financial advice','Do not promise anything outside the knowledge','Stay on topic']};
+c.welcome=welcome(c);c.prompt=bprompt(c);S.cfg=c;S.hist=[JSON.stringify(c)];$('#log').innerHTML='';$('#built').hidden=false;S.pub=0;fill();$('#built').scrollIntoView({behavior:'smooth'})};
+function fill(){const c=S.cfg;$('#f-name').value=c.name;$('#f-welcome').value=c.welcome;$('#f-lang').value=c.lang;$('#f-prompt').value=c.prompt;$('#f-kb').value=c.kb;
+$('#flow').innerHTML=c.steps.map((s,i)=>`<div class="row" style="margin:4px 0"><span class="mute">${i+1}</span><input data-s="${i}" value="${esc(s)}" aria-label="Step ${i+1}" style="flex:1"><button class="s" data-r="${i}" aria-label="Remove step ${i+1}">×</button></div>`).join('');
+$$('[data-s]').forEach(i=>i.oninput=()=>{c.steps[+i.dataset.s]=i.value});$$('[data-r]').forEach(b=>b.onclick=()=>{c.steps.splice(+b.dataset.r,1);fill()});voices();$('#ver').textContent='Version '+S.hist.length}
+$('#addstep').onclick=()=>{S.cfg.steps.push('New step');fill()};
+[['f-name','name'],['f-welcome','welcome'],['f-prompt','prompt'],['f-kb','kb']].forEach(([i,k])=>$('#'+i).oninput=e=>{S.cfg[k]=e.target.value});
+$('#f-lang').onchange=e=>{S.cfg.lang=e.target.value};
+let vf='All';function voices(){const t=['All',...new Set(VO.map(v=>v.tag))];$('#vf').innerHTML=t.map(x=>`<button class="chip ${x===vf?'on':''}" data-f="${x}">${x}</button>`).join('');
+$('#voices').innerHTML=VO.filter(v=>vf==='All'||v.tag===vf).map(v=>`<div class="voice ${S.cfg.voice===v.id?'on':''}"><span><b>${v.n}</b> <span class="mute">${v.tag}</span></span><span class="row"><button class="s" data-pv="${v.id}">Preview</button><button class="${S.cfg.voice===v.id?'p':'s'}" data-sv="${v.id}">${S.cfg.voice===v.id?'Selected':'Select'}</button></span></div>`).join('');
+$$('[data-f]').forEach(b=>b.onclick=()=>{vf=b.dataset.f;voices()});$$('[data-sv]').forEach(b=>b.onclick=()=>{S.cfg.voice=b.dataset.sv;voices()});$$('[data-pv]').forEach(b=>b.onclick=()=>prev(b.dataset.pv))}
+function snap(){return JSON.stringify(S.cfg)}
+function edit(m){const c=S.cfg,l=m.toLowerCase(),b=JSON.parse(snap()),hit=[];
+if(/short|brief|concise/.test(l)){c.short=1;hit.push(1)}
+if(/warm|friendl|kind/.test(l)){c.warm=1;c.tone='warm and friendly';hit.push(1)}
+if(/formal|professional/.test(l)){c.warm=0;c.tone='formal and professional';hit.push(1)}
+if(/hindi/.test(l)){c.lang='English + Hindi';hit.push(1)}
+if(/human|transfer|escalat|angry|pain/.test(l)){c.handoff=true;hit.push(1)}
+VO.forEach(v=>{if(l.includes(v.n.toLowerCase())){c.voice=v.id;hit.push(1)}});
+if(!hit.length)return null;c.welcome=welcome(c);c.prompt=bprompt(c);
+const d=[];['welcome','lang','tone','voice','handoff'].forEach(k=>{if(b[k]!==c[k])d.push([k,b[k],c[k]])});return d}
+function chat(){const m=$('#chat').value.trim();if(!m)return;const before=snap();const d=edit(m);const L=$('#log');
+if(!d){L.insertAdjacentHTML('afterbegin',`<div><b>${esc(m)}</b><br><span class="mute">I couldn’t map that to a change. Try tone, length, language, voice or hand-off.</span></div>`)}
+else{S.hist.push(before);fill();L.insertAdjacentHTML('afterbegin',`<div><b>${esc(m)}</b>${d.map(x=>`<br><span class="mute">${x[0]}</span><br><span class="del">− ${esc(x[1])}</span><br><span class="add">+ ${esc(x[2])}</span>`).join('')}</div>`)}
+$('#chat').value=''}
+$('#send').onclick=chat;$('#chat').onkeydown=e=>{if(e.key==='Enter')chat()};
+$('#undo').onclick=()=>{if(S.hist.length>1){S.cfg=JSON.parse(S.hist.pop());fill();$('#log').insertAdjacentHTML('afterbegin','<div class="mute">Reverted to the previous version.</div>')}};
+function speak(t,vid,done){if(!('speechSynthesis' in window)){done&&done();return}speechSynthesis.cancel();const v=VO.find(x=>x.id===(vid||S.cfg.voice));const u=new SpeechSynthesisUtterance(t);u.pitch=v.p;u.rate=v.r;u.lang=/[\u0900-\u097F]/.test(t)?'hi-IN':'en-IN';
+u.onstart=()=>{$('#wave').classList.add('on');done&&done(1)};u.onend=u.onerror=()=>$('#wave').classList.remove('on');speechSynthesis.speak(u)}
+function add(w,t){const k=S.call;k.tr.push([w,t]);const d=document.createElement('div');d.className='msg '+w;d.textContent=t;$('#tr').appendChild(d);$('#tr').scrollTop=1e5}
+function sys(t){const d=document.createElement('div');d.className='msg n';d.textContent=t;$('#tr').appendChild(d)}
+function reply(t){const c=S.cfg,l=t.toLowerCase(),k=S.call;
+if(c.handoff&&/pain|angry|upset|human|person|manager|emergency|दर्द/.test(l)){k.outcome='Transferred';k.flag=true;return 'I’m sorry to hear that. I’m connecting you to a team member right now.'}
+if(k.b&&k.b.s!=='done'){const b=k.b;if(b.s==='name'){b.name=t;b.s='day';return `Thanks, ${t}. Which day suits you?`}if(b.s==='day'){b.day=t;b.s='time';return `And what time on ${t}?`}b.time=t;b.s='done';k.outcome='Booked';return `Done! I’ve booked ${b.name} for ${b.day} at ${t}. Anything else?`}
+if(/book|appoint|schedule|visit|reserv|slot/.test(l)){k.b={s:'name'};return 'Happy to help. May I have your name?'}
+if(/price|cost|fee|charge|rate|how much|कीमत/.test(l)){const ln=c.kb.split('\n').filter(x=>x.trim()),w=l.split(/\W+/).filter(x=>x.length>3),m=ln.filter(x=>w.some(y=>x.toLowerCase().includes(y)));k.ans=1;return m.length?`Sure: ${m.slice(0,2).join('; ')}.`:ln.length?`Here’s what I have: ${ln.slice(0,3).join('; ')}.`:'I don’t have pricing details yet.'}
+if(/namaste|नमस्ते|hello|\bhi\b|hey/.test(l))return c.lang.includes('Hindi')?'नमस्ते! How can I help you today?':'Hello! How can I help you today?';
+if(/bye|thank/.test(l)){k.ans=1;return 'Thank you for calling. Goodbye!'}
+return `I can help with: ${c.goals.join(', ').toLowerCase()}. What would you like to do?`}
+function agent(t,t0){setTimeout(()=>{if(!S.call)return;add('a',t);speak(t,0,f=>{if(f)$('#lat').textContent='Latency: '+Math.round(performance.now()-t0)+' ms (simulated)'})},220+Math.random()*260)}
+function user(t){if(!S.call||!t.trim())return;const sp=window.speechSynthesis&&speechSynthesis.speaking;if(sp){speechSynthesis.cancel();$('#wave').classList.remove('on');sys('Caller interrupted the agent')}
+const t0=performance.now();add('u',t.trim());agent(reply(t),t0)}
+function start(){if(!S.cfg)return;S.call={t0:Date.now(),tr:[],outcome:'Open',flag:false};$('#tr').innerHTML='';$('#lat').textContent='Latency: no turns yet';['mic','end','say','sendsay'].forEach(i=>$('#'+i).disabled=false);$('#start').disabled=true;agent(S.cfg.welcome,performance.now())}
+function end(){const k=S.call;if(!k)return;speechSynthesis&&speechSynthesis.cancel();$('#wave').classList.remove('on');const o=k.outcome==='Open'?(k.ans?'Resolved':'No outcome'):k.outcome;
+const neg=k.tr.some(x=>x[0]==='u'&&/pain|angry|upset|terrible/i.test(x[1]));
+S.sess.unshift({id:Date.now(),dur:Math.max(1,Math.round((Date.now()-k.t0)/1e3)),outcome:o,flag:k.flag,sent:neg?'Negative':'Positive',tr:k.tr,sum:o==='Booked'?`Caller ${k.b.name} booked ${k.b.day} at ${k.b.time}.`:o==='Transferred'?'Caller was passed to a person.':o==='Resolved'?'Caller’s questions were answered.':'Call ended without a clear outcome.'});
+S.call=null;['mic','end','say','sendsay'].forEach(i=>$('#'+i).disabled=true);$('#start').disabled=false;sys('Call saved to the dashboard ('+o+')')}
+$('#start').onclick=start;$('#end').onclick=end;$('#sendsay').onclick=()=>{user($('#say').value);$('#say').value=''};$('#say').onkeydown=e=>{if(e.key==='Enter')$('#sendsay').click()};
+$('#mic').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;const n=$('#note');if(!SR){n.textContent='Speech input isn’t available in this browser. Type the caller’s words instead.';return}
+if(window.speechSynthesis&&speechSynthesis.speaking){speechSynthesis.cancel();$('#wave').classList.remove('on');sys('Caller interrupted the agent')}
+const r=new SR();r.lang=S.cfg.lang.includes('Hindi')?'hi-IN':'en-IN';r.onresult=e=>user(e.results[0][0].transcript);r.onerror=e=>{n.textContent='Microphone problem ('+e.error+'). Check permission or type instead.'};try{r.start();n.textContent='Listening…'}catch(x){n.textContent='Microphone unavailable. Type instead.'}};
+function dep(){const c=S.cfg;$('#pub').disabled=!c;if(!c)return;const id='agt_'+btoa(c.name+c.biz).replace(/\W/g,'').slice(0,8).toLowerCase();
+$('#dstate').textContent=S.pub?'Published. Your agent is live on the link below.':'Ready to publish '+c.name+' for '+c.biz+'.';$('#pub').textContent=S.pub?'Published ✓':'Publish agent';$('#dout').hidden=!S.pub;
+$('#link').textContent='https://vaanibuilder.example/talk/'+id;$('#embed').textContent=`<script src="https://vaanibuilder.example/widget.js"\n  data-agent="${id}" async><\/script>`}
+$('#pub').onclick=()=>{S.pub=1;dep()};$('#simcall').onclick=()=>{go('test');start()};
+function dash(){const s=S.sess,n=s.length,avg=Math.round(s.reduce((a,x)=>a+x.dur,0)/n),res=Math.round(100*s.filter(x=>/Booked|Resolved/.test(x.outcome)).length/n);
+$('#stats').innerHTML=`<div><b>${n}</b>Calls</div><div><b>${avg}s</b>Average length</div><div><b>${res}%</b>Resolved or booked</div><div><b>${s.filter(x=>x.flag).length}</b>Flagged</div>`;
+$('#sess').innerHTML=s.map(x=>`<details><summary><span class="tag ${x.outcome}">${x.outcome}</span> ${x.flag?'<span class="tag flag">Needs attention</span> ':''}${esc(x.sum)} <span class="mute">${x.dur}s · ${x.sent}${x.sample?' · sample':''}</span></summary>${x.tr.map(m=>`<div><b>${m[0]==='a'?'Agent':'Caller'}:</b> ${esc(m[1])}</div>`).join('')}</details>`).join('')}
+
+async function api(p,o){const r=await fetch(p,o),d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||r.statusText);return d}
+async function loadVoices(){try{const r=await api('/api/voices');if(r.length)VO=r}catch(e){console.warn('Voices unavailable',e.message)}}
+function prev(id){const v=VO.find(x=>x.id===id);if(v&&v.url)new Audio(v.url).play()}
+$('#gen').onclick=async()=>{const b=$('#gen'),p=$('#prompt').value.trim();if(!p){genRules();return}b.disabled=true;b.textContent='Generating…';let r=null;
+try{r=await api('/api/generate',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:p})})}catch(e){}
+if(r&&r.refuse){alert('This agent can’t be built: '+(r.reason||'it looks deceptive or harmful.'));b.disabled=false;b.textContent='Generate agent';return}
+genRules();if(r){const{refuse,...x}=r;Object.assign(S.cfg,x);S.cfg.welcome=x.welcome||welcome(S.cfg);S.cfg.prompt=bprompt(S.cfg)}
+if(!VO.some(v=>v.id===S.cfg.voice)&&VO.length)S.cfg.voice=VO[0].id;S.hist=[snap()];fill();b.disabled=false;b.textContent='Generate agent'};
+$('#spk').onclick=async()=>{const b=$('#spk');if(b.rec){b.rec.stop();return}try{const st=await navigator.mediaDevices.getUserMedia({audio:true}),rec=new MediaRecorder(st),ch=[];rec.ondataavailable=e=>ch.push(e.data);
+rec.onstop=async()=>{st.getTracks().forEach(t=>t.stop());b.rec=null;b.textContent='Transcribing…';try{const d=await api('/api/stt',{method:'POST',body:new Blob(ch)});$('#prompt').value=(d.text||'').slice(0,400);cnt()}catch(e){alert('Speech to text failed: '+e.message)}b.textContent='Speak it'};
+b.rec=rec;b.textContent='Stop';rec.start()}catch(e){alert('Microphone unavailable: '+e.message)}};
+let conv=null,tU=0,agentId=null,lastSync='';
+async function sync(){const k=snap();if(agentId&&k===lastSync)return agentId;const d=await api('/api/agent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({cfg:S.cfg,id:agentId})});agentId=S.agent=d.agent_id;lastSync=k;return agentId}
+async function start(){const n=$('#note');try{$('#start').disabled=true;n.textContent='Preparing your agent on ElevenLabs…';const id=await sync(),{signed_url}=await api('/api/signed?agent='+id);
+const{Conversation}=await import('https://cdn.jsdelivr.net/npm/@elevenlabs/client/+esm');await navigator.mediaDevices.getUserMedia({audio:true});S.call={t0:Date.now(),tr:[]};$('#tr').innerHTML='';
+conv=await Conversation.startSession({signedUrl:signed_url,onMessage:m=>{const u=(m.source||m.role)==='user';add(u?'u':'a',m.message);if(u)tU=performance.now();else if(tU){$('#lat').textContent='Reply latency: '+Math.round(performance.now()-tU)+' ms';tU=0}},
+onModeChange:m=>$('#wave').classList.toggle('on',m.mode==='speaking'),onError:e=>{n.textContent='Voice error: '+(e.message||e)},onDisconnect:()=>endUi()});
+['end','say','sendsay'].forEach(i=>$('#'+i).disabled=false);n.textContent='Live. Just talk, and interrupt any time.'}catch(e){n.textContent='Could not start the call: '+e.message+'. Check microphone permission and the API key.';$('#start').disabled=false}}
+function endUi(){conv=null;S.call=null;$('#wave').classList.remove('on');['end','say','sendsay'].forEach(i=>$('#'+i).disabled=true);$('#start').disabled=false;sys('Call ended. It appears on the dashboard in a few seconds.')}
+function end(){if(conv)conv.endSession()}
+function user(t){if(conv&&t.trim())conv.sendUserMessage(t.trim())}
+async function dep(){const c=S.cfg;$('#pub').disabled=!c;if(!c)return;$('#dstate').textContent=S.pub?'Published. Your agent is live on the link below.':'Ready to publish '+c.name+' for '+c.biz+'.';$('#pub').textContent=S.pub?'Published ✓':'Publish agent';$('#dout').hidden=!S.pub;
+if(S.pub&&agentId){$('#link').textContent=location.origin+'/talk.html?agent='+agentId;$('#embed').textContent=`<elevenlabs-convai agent-id="${agentId}"></elevenlabs-convai>\n<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async><\/script>`}}
+$('#pub').onclick=async()=>{try{$('#pub').disabled=true;await sync();S.pub=1;dep()}catch(e){$('#dstate').textContent='Publish failed: '+e.message;$('#pub').disabled=false}};
+async function dash(){let s=[];if(S.agent)try{s=(await api('/api/conversations?agent='+S.agent)).items}catch(e){$('#sess').textContent='Could not load calls: '+e.message;return}
+const n=s.length,avg=n?Math.round(s.reduce((a,x)=>a+x.dur,0)/n):0,res=n?Math.round(100*s.filter(x=>x.outcome==='Resolved').length/n):0;
+$('#stats').innerHTML=`<div><b>${n}</b>Calls</div><div><b>${avg}s</b>Average length</div><div><b>${res}%</b>Resolved</div><div><b>${s.filter(x=>x.flag).length}</b>Flagged</div>`;
+$('#sess').innerHTML=n?s.map(x=>`<details><summary><span class="tag ${x.outcome==='Resolved'?'Resolved':''}">${esc(x.outcome)}</span> ${x.flag?'<span class="tag flag">Needs attention</span> ':''}${esc(x.sum)} <span class="mute">${x.dur}s · ${x.sent}</span></summary>${x.tr.map(m=>`<div><b>${m[0]==='a'?'Agent':'Caller'}:</b> ${esc(m[1])}</div>`).join('')}</details>`).join(''):'<p class="mute">No calls yet. Run a test call, then reopen this tab.</p>'}
+loadVoices().then(()=>{if(S.cfg)voices()});
+go('create');cnt();
+</script></body></html>

@@ -1,0 +1,4 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Talk to the agent</title></head>
+<body style="font-family:system-ui;max-width:560px;margin:40px auto;padding:0 20px">
+<h1>Talk to our AI assistant</h1><p>This is an AI voice assistant. Calls are transcribed so the owner can review them.</p>
+<div id="w"></div><script>const a=new URLSearchParams(location.search).get('agent');if(a){document.getElementById('w').innerHTML='<elevenlabs-convai agent-id="'+encodeURIComponent(a)+'"></elevenlabs-convai>';const s=document.createElement('script');s.src='https://unpkg.com/@elevenlabs/convai-widget-embed';s.async=true;document.body.appendChild(s)}else document.getElementById('w').textContent='Missing agent id in the link.'</script></body></html>
