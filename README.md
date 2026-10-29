@@ -59,13 +59,13 @@ Allow microphone access in the browser. The key needs access to Agents, Voices a
 | Requirement | Status |
 |---|---|
 | Prompt box, character limit, examples, 5 starters | [Working / Untested] |
-| ElevenLabs agents, TTS, STT, voice picker | [ ] |
+| ElevenLabs agents, TTS, STT, voice picker | [ working ] |
 | Live test with transcript, latency, interruption | [ ] (latency is measured in the browser) |
 | Chat edit and form editor | [ ] (chat edit is rule-based) |
 | Share link and widget | [ ] |
 | Phone | Simulated flow; real numbers can be imported from Twilio in the ElevenLabs dashboard |
-| Call list, summaries, metrics | [ ] |
-| Hindi, knowledge base | [ ] |
+| Call list, summaries, metrics | [ working ] |
+| Hindi, knowledge base | [working ] |
 | Human hand-off | Prompt-based and flagged on the dashboard, not a live transfer |
 | Not built | Voice cloning, simulated callers, bulk campaigns, caller memory, tool actions |
 
